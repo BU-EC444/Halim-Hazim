@@ -1,12 +1,12 @@
 #  Skill Name
 
-Author: FirstName LastName
+Author: Hazim Halim
 
-Date: YYYY-MM-DD
+Date: 2021-02-02
 -----
 
 ## Summary
-
+Added a few words to change the file
 
 ## Sketches and Photos
 
