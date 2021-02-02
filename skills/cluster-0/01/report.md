@@ -1,12 +1,13 @@
 #  Skill Name
 
-Author: FirstName LastName
+Author: Hazim Halim
 
-Date: YYYY-MM-DD
+Date: 2021-02-02
 -----
 
 ## Summary
-
+IDE downloaded : Visual Studio Code
+Editor used : Atom
 
 ## Sketches and Photos
 
