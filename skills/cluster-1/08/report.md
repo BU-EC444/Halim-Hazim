@@ -10,7 +10,7 @@ This code and circuit will make use of  the i2c alphanumeric display
 
 
 ## Sketches and Photos
-![](image/i2c_display.png)
+![](images/i2c_display.png)
 
 ## Modules, Tools, Source Used Including Attribution
 
