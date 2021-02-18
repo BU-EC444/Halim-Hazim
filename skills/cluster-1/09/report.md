@@ -1,12 +1,12 @@
-#  Skill Name
+#  Servo
 
-Author: FirstName LastName
+Author: Hazim Halim
 
-Date: YYYY-MM-DD
+Date: 2021-02-12
 -----
 
 ## Summary
-
+This code is used to control the server using a PWM. 
 
 ## Sketches and Photos
 
@@ -15,6 +15,7 @@ Date: YYYY-MM-DD
 
 
 ## Supporting Artifacts
-
+Link to a video with working servo
+https://drive.google.com/file/d/1kK2IWYVQcpAiGpHzua5-WBr9FI6Tdsha/view?usp=sharing
 
 -----
