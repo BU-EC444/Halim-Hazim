@@ -16,6 +16,8 @@ The LEDs will light up and represents a number from 0 - 15 in binary
 
 
 ## Supporting Artifacts
+Link to the LED in action
+https://drive.google.com/file/d/1lYOP5yatCMb18DzLQ-RKrH3PTcb2QvVZ/view?usp=sharing
 
 
 -----
