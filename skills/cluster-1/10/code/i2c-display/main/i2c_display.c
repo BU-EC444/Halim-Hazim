@@ -31,11 +31,22 @@
 #define ACK_VAL                            0x00 // i2c ack value
 #define NACK_VAL                           0xFF // i2c nack value
 int upDown = 1;
-int flag = 0;
-static void IRAM_ATTR gpio_isr_handler(void* arg)  // Interrupt handler for your GPIO
-	{
-		flag ^= 1;		// Toggle state of flag
-	}
+
+// Hardware interrupt definitions
+#define GPIO_INPUT_IO_1       4
+#define ESP_INTR_FLAG_DEFAULT 0
+#define GPIO_INPUT_PIN_SEL    1ULL<<GPIO_INPUT_IO_1
+
+
+int flag = 0;     // Flag for signaling from ISR
+
+// Button interrupt handler
+static void IRAM_ATTR gpio_isr_handler(void* arg){
+  flag = 1;
+}
+
+
+
 // Function to initiate i2c -- note the MSB declaration!
 static void i2c_example_master_init(){
     // Debug
@@ -188,14 +199,16 @@ static void test_alpha_display() {
       //if branch
       if(upDown == 1){
         //this part says up
-        displaybuffer[0] = 0b0100000000111001;
-        displaybuffer[1] = 0b0100000000111000;
+        displaybuffer[0] = 0b0000000000111110;//U
+        displaybuffer[1] = 0b0000000011110011;//P
+        displaybuffer[2] = 0b0000000000000000;
+        displaybuffer[3] = 0b0000000000000000;
       }else{
         //this part says down
-        displaybuffer[0] = 0x3F;  // T.
-        displaybuffer[1] = 0b1010001;  // D.
-        displaybuffer[2] = 0b0100000000111001;  // C.
-        displaybuffer[3] = 0b0100000000111000;  // L.
+        displaybuffer[0] = 0b0001001000001111;//D
+        displaybuffer[1] = 0b0000000000111111;//O.
+        displaybuffer[2] = 0b0010100000110110;//W.
+        displaybuffer[3] = 0b0010000100110110;//N.
 
       }
 
@@ -204,7 +217,7 @@ static void test_alpha_display() {
       // }
 
       if(ret == ESP_OK) {
-        printf("- wrote: T.D.C.L. \n\n");
+        //printf("- wrote: T.D.C.L. \n\n");
       }
     }
 
@@ -212,7 +225,7 @@ static void test_alpha_display() {
 }
 
 static void led_init(){
-  gpio_pad_select_gpio(12);
+    gpio_pad_select_gpio(12);
     gpio_pad_select_gpio(27);
     gpio_pad_select_gpio(33);
     gpio_pad_select_gpio(15);
@@ -247,25 +260,35 @@ static void led_task(){
 }
 
 static void but_init(){
-  gpio_pad_select_gpio(34);
-  gpio_set_direction(34, GPIO_MODE_INPUT);
+  gpio_config_t io_conf;
+  //interrupt of rising edge
+  io_conf.intr_type = GPIO_PIN_INTR_POSEDGE;
+  //bit mask of the pins, use GPIO4 here
+  io_conf.pin_bit_mask = GPIO_INPUT_PIN_SEL;
+  //set as input mode
+  io_conf.mode = GPIO_MODE_INPUT;
+  //enable pull-up mode
+  io_conf.pull_up_en = 1;
+  gpio_config(&io_conf);
+  gpio_intr_enable(GPIO_INPUT_IO_1 );
+  //install gpio isr service
+  gpio_install_isr_service(ESP_INTR_FLAG_LEVEL3);
+  //hook isr handler for specific gpio pin
+  gpio_isr_handler_add(GPIO_INPUT_IO_1, gpio_isr_handler, (void*) GPIO_INPUT_IO_1);
 }
 
 
 
 static void but_task(){
-  gpio_intr_enable(34); 	// Enable interrupt on IO pin
-	gpio_install_isr_service(ESP_INTR_FLAG_LEVEL3);	    // Install ISR
-	gpio_isr_handler_add(gpio_isr_handler);	// Hook ISR to GPIO pin
+  while(1) {
+      if(flag) {
+        printf("Button pressed.\n");
+        flag = 0;
+        upDown = ~upDown;
+      }
+      vTaskDelay(100 / portTICK_PERIOD_MS);
+    }
 
-
-
-  int but_press = gpio_get_level(34);
-  if(but_press){
-    printf("Button value = %d\n",upDown );
-    upDown *= -1;
-  }
-  vTaskDelay(500/ portTICK_RATE_MS);
 }
 
 void app_main() {
