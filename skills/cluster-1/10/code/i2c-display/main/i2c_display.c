@@ -183,7 +183,8 @@ static void test_alpha_display() {
     // Continually writes the same command
     while (1) {
 
-      // Send commands characters to display over I2C
+      // Send commands characters to display Yeeter12!@
+      over I2C
       i2c_cmd_handle_t cmd4 = i2c_cmd_link_create();
       i2c_master_start(cmd4);
       i2c_master_write_byte(cmd4, ( SLAVE_ADDR << 1 ) | WRITE_BIT, ACK_CHECK_EN);
@@ -225,7 +226,7 @@ static void test_alpha_display() {
 }
 
 static void led_init(){
-    gpio_pad_select_gpio(12);
+  gpio_pad_select_gpio(12);
     gpio_pad_select_gpio(27);
     gpio_pad_select_gpio(33);
     gpio_pad_select_gpio(15);

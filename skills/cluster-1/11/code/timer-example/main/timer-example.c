@@ -16,9 +16,6 @@
 int count = 0;
 int incr = 1;
 int upDown = 1;
-int bin_count = 0b0000000000000000;
-int bin_count10 = 0b0000000000000000;
-int bin_incr = 0b0000000000000001;
 int count1 = 0;
 int count10 = 0;
 
@@ -49,6 +46,26 @@ int count10 = 0;
 #define GPIO_INPUT_IO_1       4
 #define ESP_INTR_FLAG_DEFAULT 0
 #define GPIO_INPUT_PIN_SEL    1ULL<<GPIO_INPUT_IO_1
+
+//taken from https://github.com/adafruit/Adafruit_LED_Backpack/blob/master/Adafruit_LEDBackpack.cpp
+static const uint8_t numbertable[] = {
+    0x3F, /* 0 */
+    0x06, /* 1 */
+    0x5B, /* 2 */
+    0x4F, /* 3 */
+    0x66, /* 4 */
+    0x6D, /* 5 */
+    0x7D, /* 6 */
+    0x07, /* 7 */
+    0x7F, /* 8 */
+    0x6F, /* 9 */
+    0x3F, /* 0 */
+    0x7C, /* b */
+    0x39, /* C */
+    0x5E, /* d */
+    0x79, /* E */
+    0x71, /* F */
+};
 
 int flag = 0;     // Flag for signaling from ISR
 
@@ -212,11 +229,11 @@ static void test_alpha_display() {
       // if(upDown == 1){
       //   //this part says up
       if(count1 < 10 && count10 == 0){
-        displaybuffer[0] = bin_count;
-        displaybuffer[1] = 0b0000000000000000;
+        displaybuffer[1] = numbertable[count1];
+        displaybuffer[0] = 0x3F;
       }else if(count10 > 0){
-        displaybuffer[0] = bin_count10;//U
-        displaybuffer[1] = bin_count;//P
+        displaybuffer[0] = numbertable[count10];//U
+        displaybuffer[1] = numbertable[count1];//P
       }
         // displaybuffer[0] = 0b0000000000000010;//U
         // displaybuffer[1] = 0b0000000000000111;//P
@@ -311,24 +328,19 @@ static void timer_evt_task(void *arg) {
         if (evt.flag == 1) {
 
             if(count > 99){
-              bin_count = 0b0000000000000000;
-              bin_count10 = 0b0000000000000000;
               count1 = 0;
               count10 = 0;
               count = 0;
             }
 
             if(count1 > 9){
-              bin_count10 += bin_incr;
               count10 += incr;
-              bin_count = 0b0000000000000000;
               count1 = 0;
             }
             printf("Action!\n");
             printf("Seconds elapsed: %d\n",count);
             count += incr;
             count1 += incr;
-            bin_count += bin_incr;
         }
     }
 }
@@ -357,8 +369,6 @@ static void but_task(){
         printf("Button pressed.\n");
         flag = 0;
         upDown = ~upDown;
-        bin_count = 0b0000000000000000;
-        bin_count10 = 0b0000000000000000;
         count1 = 0;
         count10 = 0;
         count = 0;
