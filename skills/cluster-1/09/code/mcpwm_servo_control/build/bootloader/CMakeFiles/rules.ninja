@@ -194,7 +194,7 @@ rule C_STATIC_LIBRARY_LINKER____idf_main_
 # Rule for re-running cmake.
 
 rule RERUN_CMAKE
-  command = /opt/homebrew/Cellar/cmake/3.19.4/bin/cmake --regenerate-during-build -S/Users/hazimhalim/esp/esp-idf/components/bootloader/subproject -B/Users/hazimhalim/Desktop/ec444/quest/Halim-Hazim/skills/cluster-1/09/code/mcpwm_servo_control/build/bootloader
+  command = /opt/homebrew/Cellar/cmake/3.19.4/bin/cmake --regenerate-during-build -S/Users/hazimhalim/esp/esp-idf/components/bootloader/subproject -B/Users/hazimhalim/Desktop/skills/Halim-Hazim/skills/cluster-1/09/code/mcpwm_servo_control/build/bootloader
   description = Re-running CMake...
   generator = 1
 

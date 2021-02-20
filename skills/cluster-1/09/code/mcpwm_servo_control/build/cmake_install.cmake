@@ -1,4 +1,4 @@
-# Install script for directory: /Users/hazimhalim/Desktop/ec444/quest/Halim-Hazim/skills/cluster-1/09/code/mcpwm_servo_control
+# Install script for directory: /Users/hazimhalim/Desktop/skills/Halim-Hazim/skills/cluster-1/09/code/mcpwm_servo_control
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -39,7 +39,7 @@ endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for each subdirectory.
-  include("/Users/hazimhalim/Desktop/ec444/quest/Halim-Hazim/skills/cluster-1/09/code/mcpwm_servo_control/build/esp-idf/cmake_install.cmake")
+  include("/Users/hazimhalim/Desktop/skills/Halim-Hazim/skills/cluster-1/09/code/mcpwm_servo_control/build/esp-idf/cmake_install.cmake")
 
 endif()
 
@@ -51,5 +51,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "/Users/hazimhalim/Desktop/ec444/quest/Halim-Hazim/skills/cluster-1/09/code/mcpwm_servo_control/build/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "/Users/hazimhalim/Desktop/skills/Halim-Hazim/skills/cluster-1/09/code/mcpwm_servo_control/build/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")

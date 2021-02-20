@@ -1,13 +1,13 @@
 # Target labels
  bootloader
 # Source files and their labels
-/Users/hazimhalim/Desktop/ec444/quest/Halim-Hazim/skills/cluster-1/09/code/mcpwm_servo_control/build/CMakeFiles/bootloader
-/Users/hazimhalim/Desktop/ec444/quest/Halim-Hazim/skills/cluster-1/09/code/mcpwm_servo_control/build/CMakeFiles/bootloader.rule
-/Users/hazimhalim/Desktop/ec444/quest/Halim-Hazim/skills/cluster-1/09/code/mcpwm_servo_control/build/CMakeFiles/bootloader-complete.rule
-/Users/hazimhalim/Desktop/ec444/quest/Halim-Hazim/skills/cluster-1/09/code/mcpwm_servo_control/build/bootloader-prefix/src/bootloader-stamp/bootloader-install.rule
-/Users/hazimhalim/Desktop/ec444/quest/Halim-Hazim/skills/cluster-1/09/code/mcpwm_servo_control/build/bootloader-prefix/src/bootloader-stamp/bootloader-mkdir.rule
-/Users/hazimhalim/Desktop/ec444/quest/Halim-Hazim/skills/cluster-1/09/code/mcpwm_servo_control/build/bootloader-prefix/src/bootloader-stamp/bootloader-download.rule
-/Users/hazimhalim/Desktop/ec444/quest/Halim-Hazim/skills/cluster-1/09/code/mcpwm_servo_control/build/bootloader-prefix/src/bootloader-stamp/bootloader-update.rule
-/Users/hazimhalim/Desktop/ec444/quest/Halim-Hazim/skills/cluster-1/09/code/mcpwm_servo_control/build/bootloader-prefix/src/bootloader-stamp/bootloader-patch.rule
-/Users/hazimhalim/Desktop/ec444/quest/Halim-Hazim/skills/cluster-1/09/code/mcpwm_servo_control/build/bootloader-prefix/src/bootloader-stamp/bootloader-configure.rule
-/Users/hazimhalim/Desktop/ec444/quest/Halim-Hazim/skills/cluster-1/09/code/mcpwm_servo_control/build/bootloader-prefix/src/bootloader-stamp/bootloader-build.rule
+/Users/hazimhalim/Desktop/skills/Halim-Hazim/skills/cluster-1/09/code/mcpwm_servo_control/build/CMakeFiles/bootloader
+/Users/hazimhalim/Desktop/skills/Halim-Hazim/skills/cluster-1/09/code/mcpwm_servo_control/build/CMakeFiles/bootloader.rule
+/Users/hazimhalim/Desktop/skills/Halim-Hazim/skills/cluster-1/09/code/mcpwm_servo_control/build/CMakeFiles/bootloader-complete.rule
+/Users/hazimhalim/Desktop/skills/Halim-Hazim/skills/cluster-1/09/code/mcpwm_servo_control/build/bootloader-prefix/src/bootloader-stamp/bootloader-install.rule
+/Users/hazimhalim/Desktop/skills/Halim-Hazim/skills/cluster-1/09/code/mcpwm_servo_control/build/bootloader-prefix/src/bootloader-stamp/bootloader-mkdir.rule
+/Users/hazimhalim/Desktop/skills/Halim-Hazim/skills/cluster-1/09/code/mcpwm_servo_control/build/bootloader-prefix/src/bootloader-stamp/bootloader-download.rule
+/Users/hazimhalim/Desktop/skills/Halim-Hazim/skills/cluster-1/09/code/mcpwm_servo_control/build/bootloader-prefix/src/bootloader-stamp/bootloader-update.rule
+/Users/hazimhalim/Desktop/skills/Halim-Hazim/skills/cluster-1/09/code/mcpwm_servo_control/build/bootloader-prefix/src/bootloader-stamp/bootloader-patch.rule
+/Users/hazimhalim/Desktop/skills/Halim-Hazim/skills/cluster-1/09/code/mcpwm_servo_control/build/bootloader-prefix/src/bootloader-stamp/bootloader-configure.rule
+/Users/hazimhalim/Desktop/skills/Halim-Hazim/skills/cluster-1/09/code/mcpwm_servo_control/build/bootloader-prefix/src/bootloader-stamp/bootloader-build.rule

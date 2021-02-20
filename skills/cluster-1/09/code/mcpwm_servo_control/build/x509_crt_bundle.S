@@ -1,4 +1,4 @@
-/* * Data converted from /Users/hazimhalim/Desktop/ec444/quest/Halim-Hazim/skills/cluster-1/09/code/mcpwm_servo_control/build/esp-idf/mbedtls/x509_crt_bundle
+/* * Data converted from /Users/hazimhalim/Desktop/skills/Halim-Hazim/skills/cluster-1/09/code/mcpwm_servo_control/build/esp-idf/mbedtls/x509_crt_bundle
  */
 .data
 .section .rodata.embedded

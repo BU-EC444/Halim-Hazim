@@ -1,4 +1,4 @@
-# Install script for directory: /Users/hazimhalim/Desktop/ec444/quest/Halim-Hazim/skills/cluster-1/09/code/mcpwm_servo_control/main
+# Install script for directory: /Users/hazimhalim/Desktop/skills/Halim-Hazim/skills/cluster-1/09/code/mcpwm_servo_control/main
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)

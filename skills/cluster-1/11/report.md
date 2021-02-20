@@ -20,6 +20,5 @@ The timer will also reset to 0 when the button is pushed.
 
 ## Supporting Artifacts
 Link to the video:
-https://drive.google.com/file/d/1ZvepC2totBq4OpETA6GBmYxKUIgVORbb/view?usp=sharing
-
+https://drive.google.com/file/d/16swYqjeyimtpXsCXw8f15lIRQtIGk1yy/view?usp=sharing
 -----
