@@ -11,7 +11,7 @@ By using the datasheet, I used a constant, (130/2100). Multiplied it with the vo
 
 ## Sketches and Photos
 ![](images/ir_range_finder.png)
-
+![](images/ir_circuit.png)
 ## Modules, Tools, Source Used Including Attribution
 
 

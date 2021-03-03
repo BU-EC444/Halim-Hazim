@@ -12,7 +12,7 @@ It also uses the a voltage divider to make sure the voltage supplied is in the a
 
 ## Sketches and Photos
 ![](images/batter_volt.png)
-
+![](images/batt_voltage.png)
 ## Modules, Tools, Source Used Including Attribution
 
 

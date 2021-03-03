@@ -14,6 +14,7 @@ https://www.maxbotix.com/documents/HRLV-MaxSonar-EZ_Datasheet.pdf
 Used this datasheet to find a suitable equation to convert voltage to distance.
 ## Sketches and Photos
 ![](images/ultrasonic.png)
+![](images/ultrasonic_circuit.png)
 
 ## Modules, Tools, Source Used Including Attribution
 
