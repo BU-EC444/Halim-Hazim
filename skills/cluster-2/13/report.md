@@ -11,7 +11,7 @@ The circuit also has a 10K Ohm resistor to make sure the voltage and current sup
 An equation was used to convert voltage to Kelvin and then to Celcius
 
 ## Sketches and Photos
-![](images/thermistor)
+![](images/thermistor.png)
 
 https://learn.adafruit.com/assets/573
 
