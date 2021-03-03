@@ -11,7 +11,7 @@ The it'll use the ADC library to convert the raw value to millivolt (mV)
 It also uses the a voltage divider to make sure the voltage supplied is in the acceptable range
 
 ## Sketches and Photos
-![images/batter_volt]
+![](images/batter_volt)
 
 ## Modules, Tools, Source Used Including Attribution
 
