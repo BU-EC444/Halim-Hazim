@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Stonks</title>
+<script type="text/javascript" src="https://canvasjs.com/assets/script/jquery-1.11.1.min.js"></script>
+<script type="text/javascript" src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+<script type="text/javascript">
+    window.onload = function() {
+
+    	/* Global variables to hold date/closing values */
+        var amznPoints = [];
+        var fbPoints = [];
+        var googlPoints = [];
+        var msftPoints = [];
+
+		/* Receive data from server*/
+		$.get("/data", function(data) {
+
+			/* Parse data */
+			for (var i=0; i<data.length; i++){
+				if(data[i].Stock == "AMZN"){
+					amznPoints.push({
+						x: data[i].Date,
+						y: parseFloat(data[i].Closing)
+					});
+				}
+				else if(data[i].Stock == "FB"){
+					fbPoints.push({
+						x: data[i].Date,
+						y: parseFloat(data[i].Closing)
+					});
+				}
+				else if(data[i].Stock == "GOOGL"){
+					googlPoints.push({
+						x: data[i].Date,
+						y: parseFloat(data[i].Closing)
+					});
+				}
+				else if(data[i].Stock == "MSFT"){
+					msftPoints.push({
+						x: data[i].Date,
+						y: parseFloat(data[i].Closing)
+					});
+				}
+			}
+
+		    /* Create chart when done parsing*/
+		    var chart = new CanvasJS.Chart("chartContainer", {
+				animationEnabled: true,
+				exportEnabled: true,
+				title:{
+					text: "Closing Values of Stocks by Day"
+				},
+				axisX:{
+					title: "Date"
+				},
+				axisY:{
+					title: "Value"
+				},
+				toolTip: {
+					shared: true
+				},
+				legend:{
+					cursor:"pointer",
+					itemclick: toggleDataSeries
+				},
+				data: [{
+					type: "spline",
+					name: "AMZN",
+					showInLegend: true,
+					dataPoints: amznPoints
+				},
+				{
+					type: "spline",
+					name: "FB",
+					showInLegend: true,
+					dataPoints: fbPoints
+				},
+				{
+					type: "spline",
+					name: "GOOGL",
+					showInLegend: true,
+					dataPoints: googlPoints
+				},
+				{
+					type: "spline",
+					name: "MSFT",
+					showInLegend: true,
+					dataPoints: msftPoints
+				}]
+			});
+
+			chart.render();
+
+			/* Function to toggle data visibility on click */
+			function toggleDataSeries(e) {
+				if(typeof(e.dataSeries.visible) === "undefined" || e.dataSeries.visible) {
+					e.dataSeries.visible = false;
+				}
+				else {
+					e.dataSeries.visible = true;
+				}
+				chart.render();
+			}
+
+		});
+  	}
+</script>
+</head>
+<body>
+	<div id="chartContainer" style="height: 300px; max-width: 920px; margin: 0px auto;"></div>
+</body>
+</html>
