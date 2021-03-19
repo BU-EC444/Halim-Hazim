@@ -1,15 +1,15 @@
-#  Skill Name
+#  ESP WiFi
 
-Author: FirstName LastName
+Author: Hazim Ab Halim
 
-Date: YYYY-MM-DD
+Date: 2021-03-15
 -----
 
 ## Summary
-
+This skill is to configure and setup the WiFi module on the ESP. Setting up the WiFi involves changing the SSID and Password configuration in the menuconfig.
 
 ## Sketches and Photos
-
+![](images/espwifi.png)
 
 ## Modules, Tools, Source Used Including Attribution
 
