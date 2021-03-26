@@ -145,18 +145,8 @@ uint8_t readRegister(uint8_t reg) {
 
 // read 16 bits (2 bytes)
 int16_t read16(uint8_t reg) {
-  // YOUR CODE HERE
-//    uint8_t val1;
-//    uint8_t val2;
-//    uint16_t trueVal;
-//    val1 = readRegister(reg);
-//    if(reg == 41){
-//        val2 = 0;
-//    }else{
-//    val2 = readRegister(reg+1);
-//    }
-//    trueVal = (val2 << 8) | val1;
-//    return trueVal;
+  
+
     uint8_t val1;
     uint8_t val2;
     val1 = readRegister(reg);
