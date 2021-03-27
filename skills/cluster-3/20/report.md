@@ -10,6 +10,8 @@ After all of this is done, I'm able to access to a server hosted on my laptop or
 
 ## Sketches and Photos
 ![](/images/ddns.png)
+![](/images/port_forwarding.png)
+
 
 ## Modules, Tools, Source Used Including Attribution
 
