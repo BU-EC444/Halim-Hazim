@@ -1,0 +1,124 @@
+<!-- client side -->
+
+<!doctype html>
+<html>
+
+<!-- HTML HEAD -->
+<head>
+	<title>Line Chart</title>
+	<!-- Source for Canvas JS - points to the web - needs internet -->
+	<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+	<!-- Source for Socket.io - this one is local -->
+	<script src="/socket.io/socket.io.js"></script>
+
+	<style>
+  	canvas{
+  		-moz-user-select: none;
+  		-webkit-user-select: none;
+  		-ms-user-select: none;
+  	}
+	</style>
+</head>
+
+<body>
+	<!-- HTML layout -->
+  <h1>Example Webpage</h1> <br>
+  <p>Time of new data in ms from some date in 1970s: </p>
+	<div id="time"></div>
+	<div id="id"></div>
+	<div id="smoke"></div>
+	<div id="temp"></div>
+	<div id = "loop" ></div>
+
+	<!-- <div id="chartContainer" style="height: 300px; width: 100%;"></div> -->
+
+	<!-- Script to handle charting -->
+	<!-- <script>
+		var dps = [];
+		var chart = new CanvasJS.Chart("chartContainer", {
+			exportEnabled: true,
+			animationEnabled: true,
+			zoomEnabled: true,
+			title :{
+				text: "Dynamic Line Chart"
+			},
+			axisY: {
+				includeZero: false,
+        title : "Temperature (deg F)"
+			},
+      axisX: {
+        title : "Time from some 1970s date in seconds"
+			},
+			data: [{
+				type: "line",
+				markerSize: 0,
+				dataPoints: dps
+			}]
+		});
+
+	</script> -->
+
+	<!-- Script to handle socket and also to update chart datapoints -->
+	<script>
+
+    var timestamp;
+    var deviceID;
+    var temperature;
+		var smoke;
+		var socket = io();
+		var base = [];
+		var list = [{"username":"admin1"}, {"username":"admin2"}, {"username":"admin3"},
+		{"username":"admin4"}, {"username":"admin5"}];
+
+
+		socket.on('message', function(msg){
+			//var db = level('./mydb', {valueEncoding: 'json'});
+
+      // Parse received message from server
+      console.log(msg);
+      timestamp = Object.keys(msg);
+      deviceID = msg[Object.keys(msg)][0].id;
+      temperature = msg[Object.keys(msg)][0].temp;
+			smoke = msg[Object.keys(msg)][0].smoke;
+			base.push(msg);
+
+			document.getElementById("time").innerHTML = "Time: " + Object.keys(msg);
+			document.getElementById("id").innerHTML = "ID: " + deviceID;
+			document.getElementById("temp").innerHTML = "Temperature: " + temperature;
+			document.getElementById("smoke").innerHTML = "Smoke: " + smoke;
+
+
+		});
+		// console.log(base);
+		// base.forEach((element)=>{
+		//
+		//
+		// 	// console.log(element.username);
+		// 	// var div = document.createElement('div');
+		// 	// var text = document.createTextNode(element.username);
+		// 	// div.appendChild(text);
+		//
+		// 	//var element = document.getElementById("loop");
+		// 	var div = document.createElement("p");
+		// 	var time = document.createTextNode(element.time);
+		// 	div.appendChild(time);
+		// 	//var div1 = document.createElement("p");
+		//
+		// 	//var time = document.getElementById("time").innerHTML = "Time: " + Object.keys(msg);//document.getElementById("time");
+		// 	// var id = document.getElementById("id");
+		// 	// var smoke = document.getElementById("smoke");
+		// 	// var temp  = document.getElementById("temp");
+		// 	// //element.appendChild(div);
+		// 	// time.appendChild(div);
+		// 	// id.appendChild(div);
+		// 	// smoke.appendChild(div);
+		// 	// temp.appendChild(div);
+		// 	var l = document.getElementById("loop");
+		// 	l.appendChild(div);
+		// });
+
+	</script>
+
+</body>
+
+</html>

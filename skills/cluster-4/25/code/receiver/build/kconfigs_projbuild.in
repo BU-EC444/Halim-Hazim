@@ -1,0 +1,5 @@
+source "/Users/hazimhalim/esp/esp-idf/components/app_update/Kconfig.projbuild"
+source "/Users/hazimhalim/esp/esp-idf/components/bootloader/Kconfig.projbuild"
+source "/Users/hazimhalim/esp/esp-idf/components/esptool_py/Kconfig.projbuild"
+source "/Users/hazimhalim/esp/esp-idf/components/partition_table/Kconfig.projbuild"
+source "/Users/hazimhalim/Desktop/ec444/quest/Halim-Hazim/skills/cluster-4/25/code/receiver/main/Kconfig.projbuild"
