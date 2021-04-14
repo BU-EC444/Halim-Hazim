@@ -1,0 +1,83 @@
+<!-- client side -->
+
+<!doctype html>
+<html>
+
+<!-- HTML HEAD -->
+<head>
+	<title>Votes</title>
+
+	<script src="/socket.io/socket.io.js"></script>
+
+	<style>
+
+	</style>
+</head>
+
+<body>
+	<!-- HTML layout -->
+  <h1>Voting Result</h1> <br>
+  <p>Time of new data in ms from some date in 1978s: </p>
+	<div id="time"></div>
+	<div id="id"></div>
+	<div id="temp"></div>
+
+	<script>
+
+    var timestamp;
+    var deviceID;
+    var temperature;
+		var smoke;
+		var socket = io();
+		var base = [];
+		var list = [{"username":"admin1"}, {"username":"admin2"}, {"username":"admin3"},
+		{"username":"admin4"}, {"username":"admin5"}];
+
+
+		socket.on('message', function(msg){
+			//var db = level('./mydb', {valueEncoding: 'json'});
+
+      // Parse received message from server
+      console.log(msg);
+      timestamp = Object.keys(msg);
+      vote = Object.values(msg);
+
+			document.getElementById("time").innerHTML = "VOTE: " + timestamp;
+			document.getElementById("temp").innerHTML = "ID: " + vote;
+
+
+
+		});
+		// console.log(base);
+		// base.forEach((element)=>{
+		//
+		//
+		// 	// console.log(element.username);
+		// 	// var div = document.createElement('div');
+		// 	// var text = document.createTextNode(element.username);
+		// 	// div.appendChild(text);
+		//
+		// 	//var element = document.getElementById("loop");
+		// 	var div = document.createElement("p");
+		// 	var time = document.createTextNode(element.time);
+		// 	div.appendChild(time);
+		// 	//var div1 = document.createElement("p");
+		//
+		// 	//var time = document.getElementById("time").innerHTML = "Time: " + Object.keys(msg);//document.getElementById("time");
+		// 	// var id = document.getElementById("id");
+		// 	// var smoke = document.getElementById("smoke");
+		// 	// var temp  = document.getElementById("temp");
+		// 	// //element.appendChild(div);
+		// 	// time.appendChild(div);
+		// 	// id.appendChild(div);
+		// 	// smoke.appendChild(div);
+		// 	// temp.appendChild(div);
+		// 	var l = document.getElementById("loop");
+		// 	l.appendChild(div);
+		// });
+
+	</script>
+
+</body>
+
+</html>
