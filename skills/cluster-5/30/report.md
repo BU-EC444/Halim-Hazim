@@ -1,12 +1,11 @@
-#  Skill Name
+#  Crawler
+Author: Hazim Ab Halim
 
-Author: FirstName LastName
-
-Date: YYYY-MM-DD
+Date: 2021-04-28
 -----
 
 ## Summary
-
+This skill is to explore how to use the crawler. The crawler's drive motor is initialized and calibrated before being able to be used. The two front wheels are used for steering. 
 
 ## Sketches and Photos
 

@@ -1,6 +1,7 @@
 /*
   Adapted I2C example code to work with the Adafruit ADXL343 accelerometer. Ported and referenced a lot of code from the Adafruit_ADXL343 driver code.
   ----> https://www.adafruit.com/product/4097
+
   Emily Lam, Aug 2019 for BU EC444
 */
 #include <stdio.h>
@@ -9,6 +10,7 @@
 #include "./ADXL343.h"
 
 // Master I2C
+#define LIDAR_ADDRESS                     (0x62)    /**< Assumes ALT address pin low */
 #define I2C_EXAMPLE_MASTER_SCL_IO          22   // gpio number for i2c clk
 #define I2C_EXAMPLE_MASTER_SDA_IO          23   // gpio number for i2c data
 #define I2C_EXAMPLE_MASTER_NUM             I2C_NUM_0  // i2c port
@@ -21,11 +23,13 @@
 #define ACK_CHECK_DIS                      false// i2c master will not check ack
 #define ACK_VAL                            0x00 // i2c ack value
 #define NACK_VAL                           0xFF // i2c nack value
+#define REGISTER_READ                      0x01
+#define HIGH_LOW                           0x8f
+
 
 // ADXL343
-#define SLAVE_ADDR                         ADXL343_ADDRESS // 0x53
-float v = 0;
-float v_new = 0;
+#define SLAVE_ADDR                         (0x62)//ADXL343_ADDRESS // 0x53
+
 // Function to initiate i2c -- note the MSB declaration!
 static void i2c_master_init(){
   // Debug
@@ -62,11 +66,11 @@ static void i2c_master_init(){
 int testConnection(uint8_t devAddr, int32_t timeout) {
   i2c_cmd_handle_t cmd = i2c_cmd_link_create();
   i2c_master_start(cmd);
-  i2c_master_write_byte(cmd, (devAddr << 1) | I2C_MASTER_WRITE, ACK_CHECK_EN);
+  i2c_master_write_byte(cmd, (devAddr << 1) | I2C_MASTER_WRITE, 0x01);
   i2c_master_stop(cmd);
   int err = i2c_master_cmd_begin(I2C_EXAMPLE_MASTER_NUM, cmd, 1000 / portTICK_RATE_MS);
   i2c_cmd_link_delete(cmd);
-    return err;
+  return err;
 }
 
 // Utility function to scan for i2c device
@@ -94,7 +98,7 @@ int getDeviceID(uint8_t *data) {
   i2c_cmd_handle_t cmd = i2c_cmd_link_create();
   i2c_master_start(cmd);
   i2c_master_write_byte(cmd, ( SLAVE_ADDR << 1 ) | WRITE_BIT, ACK_CHECK_EN);
-  i2c_master_write_byte(cmd, ADXL343_REG_DEVID, ACK_CHECK_EN);
+  i2c_master_write_byte(cmd, ADXL343_REG_DEVID , ACK_CHECK_EN);
   i2c_master_start(cmd);
   i2c_master_write_byte(cmd, ( SLAVE_ADDR << 1 ) | READ_BIT, ACK_CHECK_EN);
   i2c_master_read_byte(cmd, data, ACK_CHECK_DIS);
@@ -106,48 +110,49 @@ int getDeviceID(uint8_t *data) {
 
 // Write one byte to register
 void writeRegister(uint8_t reg, uint8_t data) {
-  // YOUR CODE HERE
+    int ret;
     i2c_cmd_handle_t cmd = i2c_cmd_link_create();
+    //start command
     i2c_master_start(cmd);
-    i2c_master_write_byte(cmd, ( SLAVE_ADDR << 1 ) | WRITE_BIT, ACK_CHECK_EN);
-    i2c_master_write_byte(cmd, reg, ACK_CHECK_EN);
-    i2c_master_write_byte(cmd, data, ACK_CHECK_DIS);
-    
+    //slave address followed by write bit
+    i2c_master_write_byte(cmd, ( SLAVE_ADDR << 1 ) | WRITE_BIT, I2C_MASTER_ACK);
+    //register pointer sent
+    i2c_master_write_byte(cmd, reg, I2C_MASTER_ACK);
+    //data sent
+    i2c_master_write_byte(cmd, data, I2C_MASTER_NACK);
+    //stop command
     i2c_master_stop(cmd);
     i2c_master_cmd_begin(I2C_EXAMPLE_MASTER_NUM, cmd, 1000 / portTICK_RATE_MS);
     i2c_cmd_link_delete(cmd);
-    
+    return ret;
 }
 
 // Read register
-uint8_t readRegister(uint8_t reg) {
-  // YOUR CODE HERE
-    uint8_t val;
-    i2c_cmd_handle_t cmd = i2c_cmd_link_create();
-    
-    i2c_master_start(cmd);
-    
-    i2c_master_write_byte(cmd, ( SLAVE_ADDR << 1 ) | WRITE_BIT, ACK_CHECK_EN);
-    
-    i2c_master_write_byte(cmd, reg, ACK_CHECK_EN);
-    
-    i2c_master_start(cmd);
-    
-    i2c_master_write_byte(cmd, ( SLAVE_ADDR << 1 ) | READ_BIT, ACK_CHECK_EN);
-    
-    i2c_master_read_byte(cmd, &val, ACK_CHECK_DIS);
-    
-    i2c_master_stop(cmd);
-    i2c_master_cmd_begin(I2C_EXAMPLE_MASTER_NUM, cmd, 1000 / portTICK_RATE_MS);
-    i2c_cmd_link_delete(cmd);
-    return val;
-    
+  uint8_t readRegister(uint8_t reg) {
+    uint8_t temp1, temp2;
+    uint16_t total_data;
+    int ret1, ret2;
+    i2c_cmd_handle_t cmd1 = i2c_cmd_link_create();
+    i2c_cmd_handle_t cmd2 = i2c_cmd_link_create();
+    i2c_master_start(cmd1);
+    i2c_master_write_byte(cmd1, ( SLAVE_ADDR << 1) | WRITE_BIT, I2C_MASTER_ACK);
+    i2c_master_write_byte(cmd1, reg, I2C_MASTER_ACK);
+    i2c_master_stop(cmd1);
+    ret1 = i2c_master_cmd_begin(I2C_EXAMPLE_MASTER_NUM, cmd1, 1000 / portTICK_RATE_MS);
+    i2c_master_start(cmd2);
+    i2c_master_write_byte(cmd2, ( SLAVE_ADDR << 1) | READ_BIT, I2C_MASTER_ACK); //check
+    i2c_master_read_byte(cmd2, &temp1, I2C_MASTER_ACK);
+    i2c_master_read_byte(cmd2, &temp2, I2C_MASTER_NACK);
+    i2c_master_stop(cmd2);
+    ret2 = i2c_master_cmd_begin(I2C_EXAMPLE_MASTER_NUM, cmd2, 1000 / portTICK_RATE_MS);
+    i2c_cmd_link_delete(cmd1);
+    i2c_cmd_link_delete(cmd2);
+    total_data = (uint16_t)(temp1 | temp2);
+    return total_data;
 }
 
 // read 16 bits (2 bytes)
 int16_t read16(uint8_t reg) {
-  
-
     uint8_t val1;
     uint8_t val2;
     val1 = readRegister(reg);
@@ -160,23 +165,23 @@ int16_t read16(uint8_t reg) {
 }
 
 void setRange(range_t range) {
-  /* Red the data format register to preserve bits */
+  // Red the data format register to preserve bits
   uint8_t format = readRegister(ADXL343_REG_DATA_FORMAT);
 
-  /* Update the data rate */
+  // Update the data rate
   format &= ~0x0F;
   format |= range;
 
-  /* Make sure that the FULL-RES bit is enabled for range scaling */
+  // Make sure that the FULL-RES bit is enabled for range scaling
   format |= 0x08;
 
-  /* Write the register back to the IC */
+  // Write the register back to the IC
   writeRegister(ADXL343_REG_DATA_FORMAT, format);
 
 }
 
 range_t getRange(void) {
-  /* Red the data format register to preserve bits */
+  // Red the data format register to preserve bits
   return (range_t)(readRegister(ADXL343_REG_DATA_FORMAT) & 0x03);
 }
 
@@ -187,36 +192,33 @@ dataRate_t getDataRate(void) {
 ////////////////////////////////////////////////////////////////////////////////
 
 // function to get acceleration
-void getAccel(float * xp, float *yp, float *zp) {
+void getAccel(float * xp, float *yp, float *zp, uint8_t *high, uint8_t *low) {
   *xp = read16(ADXL343_REG_DATAX0) * ADXL343_MG2G_MULTIPLIER * SENSORS_GRAVITY_STANDARD;
   *yp = read16(ADXL343_REG_DATAY0) * ADXL343_MG2G_MULTIPLIER * SENSORS_GRAVITY_STANDARD;
   *zp = read16(ADXL343_REG_DATAZ0) * ADXL343_MG2G_MULTIPLIER * SENSORS_GRAVITY_STANDARD;
- //printf("X: %.2f \t Y: %.2f \t Z: %.2f\n", *xp, *yp, *zp);
-    printf("X: %.2f\n", *xp);
-}
+  *high = readRegister(0x0f);
+  *low = readRegister(0x10);
+  //int16_t *distanceBytes;
+  //*distanceBytes = (((int16_t)*low << 8) | *high);
 
+ //printf("High: %.2d\n", *distanceBytes);
+}
 // function to print roll and pitch
 void calcRP(float x, float y, float z){
-  // YOUR CODE HERE
-    float roll = atan2(y,z) * 57.3;
-    float pitch = atan2((-1*x),sqrt(y*y + z*z)) * 57.3;
-    //printf("roll: %.2f \t pitch: %.2f \n", roll, pitch);
+  float roll = atan2(y , z) * 57.3;
+  float pitch = atan2((-1*x) , sqrt(y*y + z*z)) * 57.3;
 }
 
 // Task to continuously poll acceleration and calculate roll and pitch
 static void test_adxl343() {
-    
-  printf("\n>> Polling ADAXL343\n");
-    int sampling_period = 500; //in ms
-    while (1) {
+  printf("\n>> Polling Lidar\n");
+  while (1) {
     float xVal, yVal, zVal;
-    getAccel(&xVal, &yVal, &zVal);
+    int16_t distanceBytes;
+    uint8_t high, low;
+    getAccel(&xVal, &yVal, &zVal, &high, &low);
     calcRP(xVal, yVal, zVal);
-        xVal = xVal - 0.16;
-    v_new = xVal*(sampling_period/100);
-    v = v_new ;
-        printf("Speed : %0.2f\n", v);
-    vTaskDelay(500 / portTICK_RATE_MS);
+    vTaskDelay(1000 / portTICK_RATE_MS);
   }
 }
 
@@ -317,8 +319,23 @@ void app_main() {
   printf(" Hz\n\n");
 
   // Enable measurements
-  writeRegister(ADXL343_REG_POWER_CTL, 0x08);
+
 
   // Create task to poll ADXL343
-  xTaskCreate(test_adxl343,"test_adxl343", 4096, NULL, 5, NULL);
+  //xTaskCreate(test_adxl343,"test_adxl343", 4096, NULL, 5, NULL);
+  while(1) {
+      writeRegister(0x00, 0x04);
+    
+      vTaskDelay(20);
+    
+    
+      //upper byte (distance in cm)
+      uint8_t reading = readRegister(0x8F);
+      
+      uint8_t lower_byte = readRegister(0x10);
+      printf("Distance is %d\n", reading);
+      vTaskDelay(100 / portTICK_RATE_MS);
+    
+  }
+
 }
